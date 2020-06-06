@@ -1,3 +1,4 @@
+from Errors import IntFloatError
 class matrix() :
 	
 	"""
@@ -67,6 +68,9 @@ class matrix() :
 			if(len(i) != self.__col):
 				raise TypeError(f"Cannot make {iterable} a matrix.")
 			else:
+				for value in i:
+					if(isinstance(value,(int,float)==False)):
+						raise IntFloatError(value)
 				matr+=[i]
 		return matr
 				
@@ -94,7 +98,7 @@ class matrix() :
 	'''
 	Returns a list containing the matrix
 	'''
-	def pullMatrix(self):
+	def pull(self):
 		return self.__matrix
 	'''
 	Returns the row of the given index.
@@ -109,6 +113,11 @@ class matrix() :
 		for i in self.__matrix:
 			collist = [i[ColNumber-1]]
 		return collist
+	'''
+	Returns the value of the individual elements.
+	'''
+	def get(self,RowNumber,ColNumber):
+		return self.__matrix[RowNumber-1][ColNumber-1]
 	'''
 	Returns the total numbber of rows in the matrix.
 	'''
@@ -125,6 +134,14 @@ class matrix() :
 	def getOrderCount(self):
 		return self.__order
 	
+	'''
+	
+	'''
+	def set(self,RowNumber,ColNumber,value):
+		if(isinstance(value,(int,float)==False)):
+			raise IntFloatError(value)
+		self.__matrix[RowNumber-1][ColNumber-1] = value
+
 	"""
 	This method converts the matrix object into string.
 	"""
@@ -147,6 +164,8 @@ class matrix() :
 				for i in range(0,self.__col):
 					answer[j][i] += self.__matrix[j][i]
 		return matrix(answer)
+
+	
 	'''
 	Checks whether two matrix are equal or not.
 	'''
@@ -155,3 +174,23 @@ class matrix() :
 			return True
 		else:
 			return False
+	'''
+	Muliply value with each element of the matrixr
+	'''
+
+	def scalarMul(self,value):
+		for i in range(0,self.__row):
+			for j in range(0,self.__col):
+				self.__matrix[i][j] *= value
+
+	
+	def rightscalarDiv(self,value):
+		for i in range(0,self.__row):
+			for j in range(0,self.__col):
+				self.__matrix[i][j] = self.__matrix[i][j] / value
+	
+	def leftscalarDiv(self,value):
+		for i in range(0,self.__row):
+			for j in range(0,self.__col):
+				self.__matrix[i][j] = value/self.__matrix[i][j]
+	
