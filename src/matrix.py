@@ -69,7 +69,7 @@ class matrix() :
 				raise TypeError(f"Cannot make {iterable} a matrix.")
 			else:
 				for value in i:
-					if(isinstance(value,(int,float)==False)):
+					if(isinstance(value,(int,float))== False):
 						raise IntFloatError(value)
 				matr+=[i]
 		return matr
@@ -111,7 +111,7 @@ class matrix() :
 	def pullCol(self,ColNumber):
 		collist = list()
 		for i in self.__matrix:
-			collist = [i[ColNumber-1]]
+			collist += [i[ColNumber-1]]
 		return collist
 	'''
 	Returns the value of the individual elements.
@@ -156,16 +156,26 @@ class matrix() :
 	def __add__(self,other):
 		if(type(other) != matrix):
 			raise TypeError(f"Cannot add {self} with {other}. Different datatypes.")
-		else:
-			if(self.__order != other.__order):
-				raise TypeError(f"Different order matrices : {self} and {other}")
-			answer = other.__matrix
-			for j in range(0,self.__row):
-				for i in range(0,self.__col):
-					answer[j][i] += self.__matrix[j][i]
+		if(self.__order != other.__order):
+			raise TypeError(f"Different order matrices : {self} and {other}")
+		answer = other.__matrix
+		for j in range(0,self.__row):
+			for i in range(0,self.__col):
+				answer[j][i] += self.__matrix[j][i]
 		return matrix(answer)
 
 	
+	'''
+	
+	'''
+	def __mul__(self,other):
+		if(type(other) != matrix):
+			raise TypeError(f"Cannot multiply {self} with {other} . Different datatypes.")
+		if(self.__col != other.__row):
+			raise ArithmeticError(f"Cannot muliply {self} with {other} . Clashing orders")
+		answer = [[None] * other.__col] * self.__row
+		
+
 	'''
 	Checks whether two matrix are equal or not.
 	'''
@@ -175,7 +185,7 @@ class matrix() :
 		else:
 			return False
 	'''
-	Muliply value with each element of the matrixr
+	Muliply value with each element of the matrix.
 	'''
 
 	def scalarMul(self,value):
