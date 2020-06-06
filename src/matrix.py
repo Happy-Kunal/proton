@@ -14,17 +14,17 @@ class matrix() :
 	ENTER ELEMENTS IN THE MATRIX
 	IF ONLY A ROW LIST OR A TUPLE IS GIVEN THE CONSTRUCTOR CREATE A COLUMN MATRIX OF THE GIVEN LENGHT
 	"""
-	def __init__(self , order = "" , null = False , iterable =()) :
-		if(null==False):
+	def __init__(self ,element = [],null=False) :
+		if(null==True):
 			self.__row=0
 			self.__col=0
-			self.__order=0
+			self.__order= f"{self.__row} * {self.__col}"
 			self.__matrix = self.__null_matrix()
 		else:
-			self.__row = len(iterable)
-			self.__col = len(iterable[0])
-			self.__order = __row * __col
-			self.__matrix = self.__put_into_matrix(iterable)
+			self.__row = len(element)
+			self.__col = len(element[0])
+			self.__order = f"{self.__row} * {self.__col}"
+			self.__matrix = self.__put_into_matrix(element)
 	"""
 	IF ON THE WAY AT ANY INSTANT IF YOU WANTS TO CHANGE THE WHOLE 
 	MATRIX OR WANTS TO CHANGE THE INTIALY GENERATED MATRIX YOU CAN 
@@ -43,9 +43,9 @@ class matrix() :
 				
 				if (len(self.__x) != self.__col) :
 					
-					 print(f"NUMBER OF ELEMENTS IN ONE ROW CAN ONLY BE  {self.__col} BUT YOU GAVE {len(self.__x)}")
-					 self.__matrix = []
-					 break
+					print(f"NUMBER OF ELEMENTS IN ONE ROW CAN ONLY BE  {self.__col} BUT YOU GAVE {len(self.__x)}")
+					self.__matrix = []
+					break
 					 
 				self.list = []
 				for i in self.__x :
@@ -62,25 +62,13 @@ class matrix() :
 	"""		
 	def __put_into_matrix(self , iterable) :
 		
-		__matrix = []
-		
-		for self.__x in iterable :
-			
-			if (len(self.__x) != self.__col) :
-					
-					 print(f"NUMBER OF ELEMENTS IN ONE ROW CAN ONLY BE  {self.__col} BUT YOU GAVE {len(self.__x)}")
-					 __matrix = []
-					 break
-					 
-			self.list = []
-			for i in self.__x :
-					
-				self.__y = int(i)
-				self.list += [self.__y]
-					
-			__matrix += [self.list]
-			
-		return __matrix
+		matr = []
+		for i in iterable:
+			if(len(i) != self.__col):
+				raise TypeError(f"Cannot make {iterable} a matrix.")
+			else:
+				matr+=[i]
+		return matr
 				
 			
 	
@@ -142,7 +130,6 @@ class matrix() :
 	"""
 	def __str__(self):
 		return str(self.__matrix)
+	
 	def __repr__(self):
 		return str(self.__matrix)
-	
-	
