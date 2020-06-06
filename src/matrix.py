@@ -133,3 +133,17 @@ class matrix() :
 	
 	def __repr__(self):
 		return str(self.__matrix)
+	'''
+	Adds two or more matrices together.
+	'''
+	def __add__(self,other):
+		if(type(other) != matrix):
+			raise TypeError(f"Cannot add {self} with {other}. Different datatypes.")
+		else:
+			if(self.__order != other.__order):
+				raise TypeError(f"Different order matrices : {self} and {other}")
+			answer = other.__matrix
+			for j in range(0,self.__row):
+				for i in range(0,self.__col):
+					answer[j][i] += self.__matrix[j][i]
+		return matrix(answer)
