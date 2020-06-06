@@ -147,3 +147,11 @@ class matrix() :
 				for i in range(0,self.__col):
 					answer[j][i] += self.__matrix[j][i]
 		return matrix(answer)
+	'''
+	Checks whether two matrix are equal or not.
+	'''
+	def __eq__(self, value):
+		if(str(self) == str(value)):
+			return True
+		else:
+			return False
