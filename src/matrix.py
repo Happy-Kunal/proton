@@ -64,16 +64,16 @@ class matrix() :
 		
 		__matrix = []
 		
-		for __x in iterable :
+		for self.__x in iterable :
 			
-			if (len(__x) != self.__col) :
+			if (len(self.__x) != self.__col) :
 					
-					 print(f"NUMBER OF ELEMENTS IN ONE ROW CAN ONLY BE  {self.__col} BUT YOU GAVE {len(__x)}")
+					 print(f"NUMBER OF ELEMENTS IN ONE ROW CAN ONLY BE  {self.__col} BUT YOU GAVE {len(self.__x)}")
 					 __matrix = []
 					 break
 					 
 			self.list = []
-			for i in __x :
+			for i in self.__x :
 					
 				self.__y = int(i)
 				self.list += [self.__y]
@@ -103,23 +103,38 @@ class matrix() :
 				
 			self.__matrix += [self.__list]
 		return self.__matrix
-
+	'''
+	Returns a list containing the matrix
+	'''
 	def pullMatrix(self):
 		return self.__matrix
-
+	'''
+	Returns the row of the given index.
+	'''
 	def pullRow(self,RowNumber):
-		return self.__matrix[RowNumber]
-
+		return self.__matrix[RowNumber-1]
+	'''
+	Returns the column at a the given index.
+	'''
 	def pullCol(self,ColNumber):
-		return [[x[0] for x in self.__matrix], [x[1] for x in self.__matrix]]
-
-	def getRow(self):
+		collist = list()
+		for i in self.__matrix:
+			collist = [i[ColNumber-1]]
+		return collist
+	'''
+	Returns the total numbber of rows in the matrix.
+	'''
+	def getRowCount(self):
 		return self.__rows
-	
-	def getCol(self):
+	'''
+	Returns the total number of columns iin the matrix.
+	'''
+	def getColCount(self):
 		return self.__col
-	
-	def getOrder(self):
+	'''
+	Returns the order of the matrix.
+	'''
+	def getOrderCount(self):
 		return self.__order
 	
 	"""
@@ -127,3 +142,7 @@ class matrix() :
 	"""
 	def __str__(self):
 		return str(self.__matrix)
+	def __repr__(self):
+		return str(self.__matrix)
+	
+	
