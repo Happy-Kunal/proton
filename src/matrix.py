@@ -1,3 +1,4 @@
+from Errors import IntFloatError
 class matrix() :
 	
 	"""
@@ -67,6 +68,9 @@ class matrix() :
 			if(len(i) != self.__col):
 				raise TypeError(f"Cannot make {iterable} a matrix.")
 			else:
+				for value in i:
+					if(isinstance(value,(int,float))== False):
+						raise IntFloatError(value)
 				matr+=[i]
 		return matr
 				
@@ -94,7 +98,7 @@ class matrix() :
 	'''
 	Returns a list containing the matrix
 	'''
-	def pullMatrix(self):
+	def pull(self):
 		return self.__matrix
 	'''
 	Returns the row of the given index.
@@ -107,8 +111,13 @@ class matrix() :
 	def pullCol(self,ColNumber):
 		collist = list()
 		for i in self.__matrix:
-			collist = [i[ColNumber-1]]
+			collist += [i[ColNumber-1]]
 		return collist
+	'''
+	Returns the value of the individual elements.
+	'''
+	def get(self,RowNumber,ColNumber):
+		return self.__matrix[RowNumber-1][ColNumber-1]
 	'''
 	Returns the total numbber of rows in the matrix.
 	'''
@@ -125,6 +134,14 @@ class matrix() :
 	def getOrderCount(self):
 		return self.__order
 	
+	'''
+	
+	'''
+	def set(self,RowNumber,ColNumber,value):
+		if(isinstance(value,(int,float)==False)):
+			raise IntFloatError(value)
+		self.__matrix[RowNumber-1][ColNumber-1] = value
+
 	"""
 	This method converts the matrix object into string.
 	"""
@@ -139,11 +156,51 @@ class matrix() :
 	def __add__(self,other):
 		if(type(other) != matrix):
 			raise TypeError(f"Cannot add {self} with {other}. Different datatypes.")
-		else:
-			if(self.__order != other.__order):
-				raise TypeError(f"Different order matrices : {self} and {other}")
-			answer = other.__matrix
-			for j in range(0,self.__row):
-				for i in range(0,self.__col):
-					answer[j][i] += self.__matrix[j][i]
+		if(self.__order != other.__order):
+			raise TypeError(f"Different order matrices : {self} and {other}")
+		answer = other.__matrix
+		for j in range(0,self.__row):
+			for i in range(0,self.__col):
+				answer[j][i] += self.__matrix[j][i]
 		return matrix(answer)
+
+	
+	'''
+	
+	'''
+	def __mul__(self,other):
+		if(type(other) != matrix):
+			raise TypeError(f"Cannot multiply {self} with {other} . Different datatypes.")
+		if(self.__col != other.__row):
+			raise ArithmeticError(f"Cannot muliply {self} with {other} . Clashing orders")
+		answer = [[None] * other.__col] * self.__row
+		
+
+	'''
+	Checks whether two matrix are equal or not.
+	'''
+	def __eq__(self, value):
+		if(str(self) == str(value)):
+			return True
+		else:
+			return False
+	'''
+	Muliply value with each element of the matrix.
+	'''
+
+	def scalarMul(self,value):
+		for i in range(0,self.__row):
+			for j in range(0,self.__col):
+				self.__matrix[i][j] *= value
+
+	
+	def rightscalarDiv(self,value):
+		for i in range(0,self.__row):
+			for j in range(0,self.__col):
+				self.__matrix[i][j] = self.__matrix[i][j] / value
+	
+	def leftscalarDiv(self,value):
+		for i in range(0,self.__row):
+			for j in range(0,self.__col):
+				self.__matrix[i][j] = value/self.__matrix[i][j]
+	
