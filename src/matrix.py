@@ -15,12 +15,17 @@ class matrix() :
 	ENTER ELEMENTS IN THE MATRIX
 	IF ONLY A ROW LIST OR A TUPLE IS GIVEN THE CONSTRUCTOR CREATE A COLUMN MATRIX OF THE GIVEN LENGHT
 	"""
-	def __init__(self ,element = [],null=False) :
+	def __init__(self ,element = [],rows = 0,columns = 0,null=False) :
 		if(null==True):
 			self.__row=0
 			self.__col=0
 			self.__order= f"{self.__row} * {self.__col}"
 			self.__matrix = self.__null_matrix()
+		if(rows!=0 or columns!=0):
+			self.__row = rows
+			self.__col = columns
+			self.__order = f"{rows} * {columns}"
+			self.__matrix = [[0] * rows] * columns
 		else:
 			self.__row = len(element)
 			self.__col = len(element[0])
@@ -137,7 +142,7 @@ class matrix() :
 	'''
 	
 	'''
-	def set(self,RowNumber,ColNumber,value):
+	def Set(self,RowNumber,ColNumber,value):
 		if(isinstance(value,(int,float)==False)):
 			raise IntFloatError(value)
 		self.__matrix[RowNumber-1][ColNumber-1] = value
