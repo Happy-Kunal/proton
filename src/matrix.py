@@ -173,8 +173,12 @@ class matrix() :
 			raise TypeError(f"Cannot multiply {self} with {other} . Different datatypes.")
 		if(self.__col != other.__row):
 			raise ArithmeticError(f"Cannot muliply {self} with {other} . Clashing orders")
-		answer = [[None] * other.__col] * self.__row
-		
+		answer = [[0] * other.__col] * self.__row
+		for i in range(0,self.__row):
+			for j in range(0,other.__col):
+				for k in range(0,self.__col):
+					answer[i][j] += self.__matrix[i][k] * other.__matrix[k][j]
+		return matrix(answer)		
 
 	'''
 	Checks whether two matrix are equal or not.
