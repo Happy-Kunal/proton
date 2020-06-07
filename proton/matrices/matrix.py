@@ -1,4 +1,5 @@
-from Errors import IntFloatError
+from proton.errors.IntFloatError import IntFloatError
+
 from math import fsum
 
 class matrix() :
