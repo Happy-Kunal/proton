@@ -15,12 +15,17 @@ class matrix() :
 	ENTER ELEMENTS IN THE MATRIX
 	IF ONLY A ROW LIST OR A TUPLE IS GIVEN THE CONSTRUCTOR CREATE A COLUMN MATRIX OF THE GIVEN LENGHT
 	"""
-	def __init__(self ,element = [],null=False) :
+	def __init__(self ,element = [],rows = 0,columns = 0,null=False) :
 		if(null==True):
 			self.__row=0
 			self.__col=0
 			self.__order= f"{self.__row} * {self.__col}"
 			self.__matrix = self.__null_matrix()
+		if(rows!=0 or columns!=0):
+			self.__row = rows
+			self.__col = columns
+			self.__order = f"{rows} * {columns}"
+			self.__matrix = [[0] * rows] * columns
 		else:
 			self.__row = len(element)
 			self.__col = len(element[0])
@@ -137,7 +142,7 @@ class matrix() :
 	'''
 	
 	'''
-	def set(self,RowNumber,ColNumber,value):
+	def Set(self,RowNumber,ColNumber,value):
 		if(isinstance(value,(int,float)==False)):
 			raise IntFloatError(value)
 		self.__matrix[RowNumber-1][ColNumber-1] = value
@@ -173,8 +178,12 @@ class matrix() :
 			raise TypeError(f"Cannot multiply {self} with {other} . Different datatypes.")
 		if(self.__col != other.__row):
 			raise ArithmeticError(f"Cannot muliply {self} with {other} . Clashing orders")
-		answer = [[None] * other.__col] * self.__row
-		
+		answer = [[0] * other.__col] * self.__row
+		for i in range(0,self.__row):
+			for j in range(0,other.__col):
+				for k in range(0,self.__col):
+					answer[i][j] += self.__matrix[i][k] * other.__matrix[k][j]
+		return matrix(answer)		
 
 	'''
 	Checks whether two matrix are equal or not.
