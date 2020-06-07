@@ -1,2 +1,0 @@
-#matrix.py
-creates or you can say initialise the matrix
