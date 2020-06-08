@@ -1,4 +1,6 @@
 from Errors import IntFloatError
+from math import fsum
+
 class matrix() :
 	
 	"""
@@ -171,19 +173,47 @@ class matrix() :
 
 	
 	'''
-	
+	MULTIPLES TWO MATRICES OR MATRIX AND SCALER WITH EACH OTHER
 	'''
 	def __mul__(self,other):
-		if(type(other) != matrix):
-			raise TypeError(f"Cannot multiply {self} with {other} . Different datatypes.")
-		if(self.__col != other.__row):
-			raise ArithmeticError(f"Cannot muliply {self} with {other} . Clashing orders")
-		answer = [[0] * other.__col] * self.__row
-		for i in range(0,self.__row):
-			for j in range(0,other.__col):
-				for k in range(0,self.__col):
-					answer[i][j] += self.__matrix[i][k] * other.__matrix[k][j]
-		return matrix(answer)		
+	
+		if (isinstance(other , matrix)) :
+		
+			if(self.__col != other.__row):
+			
+				raise ArithmeticError(f"Cannot muliply {self} with {other} . Clashing orders")
+			
+			else :
+			
+				answer = []
+				
+				for row in self.__matrix :
+	
+					list1 = []
+	
+					for col in other.transpose() :
+		
+						list1 += [fsum(matrix.__directmul(row , col))]
+		
+					answer += [list1]
+	
+				return matrix(answer)
+		
+			
+		elif(isinstance(other , (int , float))) :
+		
+			answer = self.__matrix.copy()
+		
+			for i in range(0,self.__row):
+				for j in range(0,self.__col):
+					answer[i][j] *= other
+				
+			return matrix(answer)
+		
+		else :
+		
+			raise TypeError(f"Cannot multiply {self} with {other} . Operation On Unsupported Datatypes.")		
+		
 
 	'''
 	Checks whether two matrix are equal or not.
@@ -193,14 +223,6 @@ class matrix() :
 			return True
 		else:
 			return False
-	'''
-	Muliply value with each element of the matrix.
-	'''
-
-	def scalarMul(self,value):
-		for i in range(0,self.__row):
-			for j in range(0,self.__col):
-				self.__matrix[i][j] *= value
 
 	
 	def rightscalarDiv(self,value):
@@ -212,4 +234,35 @@ class matrix() :
 		for i in range(0,self.__row):
 			for j in range(0,self.__col):
 				self.__matrix[i][j] = value/self.__matrix[i][j]
+	
+	
+	"""
+	
+	"""
+	
+	def transpose(self) :
+	
+		trans = [[0] * self.__row] * self.__col
+	
+		for i in range(self.__col) :
+		
+			trans[i] = self.pullCol(i + 1)
+		
+		return trans
+			
+		
+	@staticmethod
+	def __directmul(list1 , list2) :
+	
+		list3 = []
+	
+		for i in range(len(list1)) :
+		
+			list3 += [list1[i] * list2[i]]
+		
+		return list3	
+			
+
+	
+	
 	
