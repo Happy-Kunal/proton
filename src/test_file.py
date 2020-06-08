@@ -1,5 +1,4 @@
 from matrix import matrix
-<<<<<<< HEAD
 b = [[1,2,3],[1,2,3]]
 b = matrix(b)
 a = matrix([[1,2],[1,2],[1,2]])
@@ -17,9 +16,3 @@ btrans = b.transpose()
 print(f"a is {a} and its transpose is {atrans}")
 print(f"b is {b} and its transpose is {btrans}")
 
-=======
-a = [[1,2,3],[1,2,3]]
-a= matrix(a)
-b = matrix([[1,2],[1,2],[1,2]])
-print(b*a)
->>>>>>> lunchspider-branch

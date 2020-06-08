@@ -172,7 +172,6 @@ class matrix() :
 		return matrix(answer)
 
 	
-<<<<<<< HEAD
 	'''
 	MULTIPLES TWO MATRICES OR MATRIX AND SCALER WITH EACH OTHER
 	'''
@@ -215,22 +214,6 @@ class matrix() :
 		
 			raise TypeError(f"Cannot multiply {self} with {other} . Operation On Unsupported Datatypes.")		
 		
-=======
-	"""
-	Multiply two matrices with each other.
-	"""
-	def __mul__(self,other):
-		if(type(other) != matrix):
-			raise TypeError(f"Cannot multiply {self} with {other} . Different datatypes.")
-		if(self.__col != other.__row):
-			raise ArithmeticError(f"Cannot muliply {self} with {other} . Clashing orders")
-		answer = [[0] * other.__col] * self.__row
-		for i in range(0,self.__row):
-			for j in range(0,other.__col):
-				for k in range(0,self.__col):
-					answer[i][j] += self.__matrix[i][k] * other.__matrix[k][j]
-		return matrix(answer)
->>>>>>> lunchspider-branch
 
 	'''
 	Checks whether two matrix are equal or not.
@@ -240,8 +223,6 @@ class matrix() :
 			return True
 		else:
 			return False
-<<<<<<< HEAD
-=======
 	'''
 	Muliply some scalar value with each element of the matrix.
 	'''
@@ -249,7 +230,6 @@ class matrix() :
 		for i in range(0,self.__row):
 			for j in range(0,self.__col):
 				self.__matrix[i][j] *= value
->>>>>>> lunchspider-branch
 
 	
 	def rightscalarDiv(self,value):
@@ -261,7 +241,6 @@ class matrix() :
 		for i in range(0,self.__row):
 			for j in range(0,self.__col):
 				self.__matrix[i][j] = value/self.__matrix[i][j]
-<<<<<<< HEAD
 	
 	
 	"""
@@ -294,13 +273,3 @@ class matrix() :
 	
 	
 	
-=======
-	"""
-	Transposes a given matrix and returns a new matrix.
-	"""
-	def transpose(self):
-		TransposedMatrix = []
-		for i in range(0,self.__col):
-			TransposedMatrix += [self.pullCol(i+1)]
-		return matrix(TransposedMatrix)
->>>>>>> lunchspider-branch
