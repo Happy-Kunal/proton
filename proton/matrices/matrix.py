@@ -2,46 +2,52 @@ from proton.errors.IntFloatError import IntFloatError
 
 from math import fsum
 
+# WHERE EVER YOU FOUND BUG WITH ITS ID , NEVER CUT THOSE LINE
+# FOR MORE INFO VISIT BUG_INFO.txt
+
+
 class matrix() :
 	
 	"""
-	THIS CLASS HANDLES ALL THE OPERATIONS RELATED TO THE GENERATION OF A MATRIX
-	SOON IT WILL BE INHERITED FROM ANOTHER CLASS OF NAME OPERATIONS SO THAT WE CAN
-	PROVIDE THE BASIC OPERATIONS LIKE CONCATINATION , MATRIX MULTIPLICATION , SPLITING
-	INTO A SYMMETRIC AND SKEW SYMMETRIC MATRIX ETC .
-	"""
+	CONSTRUCTOR OF CLASS TAKES AN ITERABLE(MOST PROBABLY A LIST OR TUPLE) AS INPUT WHICH CAN BE USED TO ENTER ELEMENTS IN THE MATRIX LIKE :
+		
+		>>> x = [[1,2,3] , [4,5,6] , [7,8,9]]
+		>>> a = matrix(x)
+		>>> b = matrix(x)
+		>>>print(b)
+		
+		[[1,2,3] , [4,5,6] , [7,8,9]]
+		
+		>>> type(b)
+		
+		class proton.matrices.matrix.matrix
 	
 	"""
-	CONSTRUCTOR OF CLASS TAKES INPUT LIKE NAME OF MATRIX , ORDER 
-	AND IS MATRIX NULL OR NOT IF IT IS NOT NULL SO YOU HAVE TO PROVIDE 
-	AN ITERABLE(MOST PROBABLY A LIST OR TUPLE) WHICH CAN BE USED TO 
-	ENTER ELEMENTS IN THE MATRIX
-	IF ONLY A ROW LIST OR A TUPLE IS GIVEN THE CONSTRUCTOR CREATE A COLUMN MATRIX OF THE GIVEN LENGHT
-	"""
-	def __init__(self ,element = [],rows = 0,columns = 0,null=False) :
-		if(null==True):
-			self.__row=0
-			self.__col=0
-			self.__order= f"{self.__row} * {self.__col}"
-			self.__matrix = self.__null_matrix()
-		if(rows!=0 or columns!=0):
-			self.__row = rows
-			self.__col = columns
-			self.__order = f"{rows} * {columns}"
-			self.__matrix = [[0] * rows] * columns
-		else:
-			self.__row = len(element)
-			self.__col = len(element[0])
-			self.__order = f"{self.__row} * {self.__col}"
-			self.__matrix = self.__put_into_matrix(element)
+	def __init__(self ,element = []) :
+		
+		self.__row = len(element)
+		self.__col = len(element[0])
+		self.__order = f"{self.__row} * {self.__col}"
+		self.__matrix = self.__put_into_matrix(element)
+		
 	"""
 	IF ON THE WAY AT ANY INSTANT IF YOU WANTS TO CHANGE THE WHOLE 
 	MATRIX OR WANTS TO CHANGE THE INTIALY GENERATED MATRIX YOU CAN 
-	USE THIS FUNCTION matrix_input() 
+	USE THIS FUNCTION matrix_input() AS :
+		
+		>>> b = b.matrix_input()
+		USE SPACES TO SEPRATE DIFFERENT ELEMENTS
+		ENTER THE ELEMENTS OF ROW 1 :1 0 0
+		ENTER THE ELEMENTS OF ROW 2 :0 1 0
+		ENTER THE ELEMENTS OF ROW 3 :0 0 1
+		
+		>>> print(b)
+		
+		[[1,2,3] , [4,5,6] , [7,8,9]]
+	
+	
 	"""
 	def matrix_input(self) :
-		
-		self.InputList = []
 		
 		print("USE SPACES TO SEPRATE DIFFERENT ELEMENTS")
 		
@@ -66,8 +72,7 @@ class matrix() :
 		
 	"""
 	IF USER DOES NOT WANTS THE INITIAL NULL MATRIX AND INSTEAD PROVIDED 
-	AN ITERABLE SO THIS FUNCTION __put_into_matrix() WILL RUN  , AFTER SOME TIME WE WILL GONNA 
-	MAKE THIS FUNCTION USEABLE BY matrix_input() TOO
+	AN ITERABLE SO THIS FUNCTION __put_into_matrix() WILL RUN
 	"""		
 	def __put_into_matrix(self , iterable) :
 		
@@ -83,38 +88,47 @@ class matrix() :
 		return matr
 				
 			
-	
-	"""
-	THIS FUNCTION __null_matrix() WILL MAKE THE MATRIX AS NULL MATRIX 
-	IT WILL BE USED BY CONSTRUCTOR AT INITIAL INSTANT
-	"""
-	
-	def __null_matrix(self) :
-		
-		self.__matrix = []
-		
-		for i in range(self.__row) :
-			
-			self.__list = []
-			
-			for j in range(self.__col) :
-				
-				self.__list += [0]
-				
-			self.__matrix += [self.__list]
-		return self.__matrix
 	'''
-	Returns a list containing the matrix
+	pull() Returns a list containing the matrix
+	
+		>>> a = matrix([[1,2,3] , [4,5,6] , [7,8,9]])
+		>>> a.pull()
+	
+		[[1,2,3] , [4,5,6] , [7,8,9]]
+	
+		>>> b.pull()
+	
+		[[1,0,0] , [0,1,0] , [0,0,1]]
+	
 	'''
 	def pull(self):
 		return self.__matrix
 	'''
-	Returns the row of the given index.
+	pullRow() Returns the row of the given index. AS :
+		
+		>>> a = matrix([[1,2,3] , [4,5,6] , [7,8,9]])
+		>>> a.pullRow(1)
+		[1,2,3]
+		>>> a.pullRow(2)
+		[4,5,6]
+		>>>a.pullRow(3)
+		[7,8,9]
+	
+	
 	'''
 	def pullRow(self,RowNumber):
 		return self.__matrix[RowNumber-1]
 	'''
-	Returns the column at a the given index.
+	pullCol() Returns the column at a the given index. AS :
+		
+		>>> a = matrix([[1,2,3] , [4,5,6] , [7,8,9]])
+		>>> a.pullCol(1)
+		[1,4,7]
+		>>> a.pullCol(2)
+		[2,5,8]
+		>>> a.pullCol(3)
+		[3,6,9]
+		
 	'''
 	def pullCol(self,ColNumber):
 		collist = list()
@@ -122,59 +136,217 @@ class matrix() :
 			collist += [i[ColNumber-1]]
 		return collist
 	'''
-	Returns the value of the individual elements.
+	To get the value of the individual element. As :
+		
+		>>> a = matrix([[1,2,3] , [4,5,6] , [7,8,9]])
+		>>> a[0,0]
+		1
+		>>> a[0,1]
+		2
+		>>> a[1,2]
+		4
+		
 	'''
-	def get(self,RowNumber,ColNumber):
-		return self.__matrix[RowNumber-1][ColNumber-1]
+	def __getitem__(self , index = (0,0)) :
+		
+		return self.__matrix[index[0]][index[1]]
+		
+		
 	'''
-	Returns the total numbber of rows in the matrix.
+	getRowCount() Returns the total number of rows in the matrix. As :
+		
+		>>> a = matrix([[1,2,3] , [4,5,6] , [7,8,9]])
+		>>> a.getRowCount()
+		3
+		>>> c = matrix([[1 , 2 , 3] , [1,2,3]])
+		>>> c.getRowCount()
+		2
+		
+		
 	'''
 	def getRowCount(self):
 		return self.__rows
 	'''
-	Returns the total number of columns iin the matrix.
+	getColCount() Returns the total number of columns iin the matrix. As :
+		
+		>>> a = matrix([[1,2,3] , [4,5,6] , [7,8,9]])
+		>>> a.getColCount()
+		3
+		>>> c = matrix([[1 , 2 , 3] , [1,2,3]])
+		>>> c.getColCount()
+		3
+		
+		
 	'''
 	def getColCount(self):
 		return self.__col
 	'''
-	Returns the order of the matrix.
+	getOrderCount() Returns the order of the matrix. As :
+		
+		>>> a = matrix([[1,2,3] , [4,5,6] , [7,8,9]])
+		>>> a.getOrderCount()
+		3 * 3
+		>>> c = matrix([[1 , 2 , 3] , [1,2,3]])
+		>>> c.getOrderCount()
+		2 * 3
+		
 	'''
 	def getOrderCount(self):
 		return self.__order
 	
-	'''
+	"""
+	diagonal related operations by vikas
+	"""
+		def getdiagonal(self) :
+		diaglist=list()
+		if self.issquare()==False :
+			raise TypeError(f"{self} is not a square matrix")
+		else :
+			for i in range(self.__row) :
+				diaglist+=[self.__matrix[i][i]]
+				
+			return diaglist
+	
+	def getdiagonalsum(self) :
+		
+		sum = 0
+		if self.issquare()==False :
+			raise TypeError(f"{self} is not a square matrix")
+		else :
+			for i in range(self.__row) :
+				sum += self.__matrix[i][i]
+				
+			return sum
+
+	
 	
 	'''
-	def Set(self,RowNumber,ColNumber,value):
-		if(isinstance(value,(int,float)==False)):
+	IF USER WANTS HE/SHE CAN CHANGE ANY PARTICULAR VALUE OF
+	ELEMENT OF MATRIX AS :
+	
+		>>> a = matrix([[1,2,3] , [4,5,6] , [7,8,9]])
+		
+		>>> a[0,0]
+		1
+		>>> a[0,0] = 400
+		>>> a
+		[[400,2,3] , [4,5,6] , [7,8,9]]
+		
+		>>> a[0,1]
+		2
+		>>> a[0,1] = 50
+		[[400,50,3] , [4,5,6] , [7,8,9]]
+		
+		>>> a[1,2]
+		4
+		>>> a[1,2] = 100
+		[[400 , 50 ,3] , [100 ,5,6] , [7,8,9]]
+	
+	'''
+	
+	def __setitem__(self , index = (0,0) , value = None) :
+		
+		if(isinstance(value,(int,float))==False):
 			raise IntFloatError(value)
-		self.__matrix[RowNumber-1][ColNumber-1] = value
+			
+		else :
+			self.__matrix[index[0]][index[1]] = value
+		
+		
 
 	"""
-	This method converts the matrix object into string.
+	These methods converts the matrix object into string.
+	
+		>>> a = matrix([[1,2,3] , [4,5,6] , [7,8,9]])
+		>>> str(a)
+		"[[1,2,3] , [4,5,6] , [7,8,9]]"
+		
 	"""
 	def __str__(self):
 		return str(self.__matrix)
 	
 	def __repr__(self):
 		return str(self.__matrix)
+		
+	"""
+	==================================================
+	BASIC ARITHMATIC OPERATIONS ON MATRICES
+	==================================================
+	"""
+	
+	
 	'''
 	Adds two or more matrices together.
+	
+		>>> a = matrix([[1,2],[1,2]])
+		>>> b = matrix([[2,4],[2,4]])
+		>>> a + b
+		[[3,4] , [3,4]]
+	
+	
 	'''
-	def __add__(self,other):
+	def __add__(self , other) :
+	
 		if(type(other) != matrix):
 			raise TypeError(f"Cannot add {self} with {other}. Different datatypes.")
 		if(self.__order != other.__order):
 			raise TypeError(f"Different order matrices : {self} and {other}")
-		answer = other.__matrix
-		for j in range(0,self.__row):
-			for i in range(0,self.__col):
-				answer[j][i] += self.__matrix[j][i]
+	
+		answer = self.__matrix.copy() # this is done to solve bug b001
+	
+		for i in range(other.__row) :
+			list1 = answer[i].copy() # this is done to solve bug b001
+		
+			for j in range(other.__col) :
+			
+				list1[j] += other.__matrix[i][j]
+			
+			answer[i] = list1
+		
+		return matrix(answer)
+		
+	"""
+	Subtracts two or more matrices .
+	
+		>>> a = matrix([[1,2],[1,2]])
+		>>> b = matrix([[2,4],[2,4]])
+		>>> a - b
+		[[-1,-2] , [-1,-2]]
+		
+	"""	
+	def __sub__(self , other) :
+	
+		if(type(other) != matrix):
+			raise TypeError(f"Cannot add {self} with {other}. Different datatypes.")
+		if(self.__order != other.__order):
+			raise TypeError(f"Different order matrices : {self} and {other}")
+	
+		answer = self.__matrix.copy() # this is done to solve bug b001
+	
+		for i in range(other.__row) :
+			list1 = answer[i].copy() # this is done to solve bug b001
+		
+			for j in range(other.__col) :
+			
+				list1[j] -= other.__matrix[i][j]
+			
+			answer[i] = list1
+		
 		return matrix(answer)
 
 	
 	'''
 	MULTIPLES TWO MATRICES OR MATRIX AND SCALER WITH EACH OTHER
+	
+		>>> a = matrix([[1,2],[1,2]])
+		>>> b = matrix([[1,2,3],[1,2,3]])
+		>>> a*b
+		[[3.0, 6.0, 9.0], [3.0, 6.0, 9.0]]
+		
+		>>> a * 2
+		[[2, 4], [2, 4]]
+	
+	
 	'''
 	def __mul__(self,other):
 	
@@ -190,11 +362,11 @@ class matrix() :
 				
 				for row in self.__matrix :
 	
-					list1 = []
+					list1 = [] # this is done to solve bug b001
 	
 					for col in other.transpose() :
 		
-						list1 += [fsum(matrix.__directmul(row , col))]
+						list1 += [fsum(matrix.__directmul(row , col))] # this is done to solve bug b001
 		
 					answer += [list1]
 	
@@ -206,8 +378,12 @@ class matrix() :
 			answer = self.__matrix.copy()
 		
 			for i in range(0,self.__row):
+				
+				list1 = answer[i].copy()
 				for j in range(0,self.__col):
-					answer[i][j] *= other
+					list1[j] *= other
+					
+				answer[i] = list1
 				
 			return matrix(answer)
 		
@@ -215,7 +391,23 @@ class matrix() :
 		
 			raise TypeError(f"Cannot multiply {self} with {other} . Operation On Unsupported Datatypes.")		
 		
-
+	
+	def __pow__(self , power) :
+		
+		if (power != int(power)) :
+			
+			 raise TypeError(f"{power} is not an integer .\nonly whole numbers are allowed") 
+		
+		elif self.issquare() == False :
+			
+			raise TypeError(f"{self} is not a square matrix . \nonly square matrices are allowed")
+				
+		else :
+			
+			return powermatrix(self , power)
+			
+			
+	
 	'''
 	Checks whether two matrix are equal or not.
 	'''
@@ -224,6 +416,46 @@ class matrix() :
 			return True
 		else:
 			return False
+	
+	
+	@staticmethod
+	def powermatrix(matr , power ) :
+				
+				if power == 0 :
+				
+					return matrix.identity(matr.getRowCount())
+					
+				else :
+					
+					mul = matr * powermatrix((power - 1) , matr)
+					
+					return mul
+				 
+			
+	
+	"""
+	These methods symmMatrix() , skewsymmMatrix() performs task as
+	per their names
+	
+	split() provides a tuple containing symmMatrix and skewsymmMatrix
+	of a matrix in same order as written
+	
+	THESE ARE CURRENTLY UNDER CONSTRUCTION SO KINDLY DON'T USE THEM FOR NOW'
+	
+	"""
+	
+	def symmMatrix(self) :
+		
+		return (((self.__matrix) + (self.transpose())) * 0.5)
+		
+	def skewSymmMatrix(self) :
+		
+		return (((self.__matrix) - (self.transpose())) * 0.5)
+		
+	def split(self) :
+		
+		return (self.symmMatrix() , self.skewSymmMatrix())
+	
 	'''
 	Muliply some scalar value with each element of the matrix.
 	'''
@@ -245,7 +477,7 @@ class matrix() :
 	
 	
 	"""
-	
+	transpose() returns the transpose of a matrix
 	"""
 	
 	def transpose(self) :
@@ -270,7 +502,204 @@ class matrix() :
 		
 		return list3	
 			
+	
+	"""
+	==================================================
+	SOME ALTERNATIVE CONSTRUCTORS
+	==================================================
+	"""
+	
+	@classmethod
+	def nullMatrix(cls , order = (1,1)) :
+		
+		__row = order[0]
+		__col = order[1]
+		
+		__matrix = [[0] * __col] * __row
+		
+		return matrix(__matrix)
+	
+	@classmethod
+	def diagonalMatrix(cls , diagonalElements = (0 ,)) :
+		
+		__k = len(diagonalElements)
+		__matr = [[0] * __k] * __k
+		
+		for i in range(__k) :
+			
+			list1 = __matr[i].copy()
+			
+			list1[i] = diagonalElements[i]
+			
+			__matr[i] = list1
+			
+		return matrix(__matr)
+		
+		
+	@classmethod
+	def scalarMatrix(cls , element , order = 1) :
+			
+		return cls.diagonalMatrix((element ,)*order)
+		
+	@classmethod
+	def identity(cls , order = 1) :
+		
+		return cls.scalarMatrix(element = 1 , order = order)
+		
+	
+	
+	"""
+	SOME BOOLEAN METHODS
+	"""
+		
+	def issingle(self) :
+		
+		if self.__row==1 and self.__col==1 :
+			return True
+			
+		return False
+			
 
+	def iscolumn(self) :
+		
+		if self.__row!=0 and self.__col==1 :
+			return True
+		return False
+			
+				
+	def isrow(self) :
+		
+		if self.__row==1 and self.__col !=0 :
+			return True
+			
+		return False
+		
+	def issquare(self) :
+		
+		if (self.__row==self.__col) :
+			return True
+		return False
+			
+		
+	def isadditive(self , other) :
+		
+		if type(other)!=matrix :
+			return False
+		
+		elif ((self.__row == other.__row) and (self.__col == other.__col)) :
+			
+			return True
+		
+		return False			
 	
+	def issymmetric(self) :
+		
+		if self.transpose()==self :
+			return True
+		
+		return False
+
+			
+	def isnull(self) :
+		
+		if self = matrix.nullMatrix(self.__row) :
+			
+			return True
+			
+		return False
+		
 	
+	def isskew(self) :
+		
+		if self.issquare()==False :
+			return False
+		
+		elif self.transpose()==(self * (-1)) :
+			return True
+			
+		return False
+		
+	def isdiagonal(self) :
+		
+		if self.issquare()==False :
+			return False
+		
+		else :
+			
+			for i in range(self.__row) :
+				for j in range(self.__col) :
+					
+					if i == j :
+						continue
+						
+					elif self[i,j] != 0 :
+						
+						return False
+						
+			return True
+	
+	def isscalar(self) :
+		
+		if self.isdiagonal() :
+			
+			a11 = self[0,0]
+			
+			for i in range(1 , self.__row) :
+				
+				if self[i , i] != a11 :
+					return False
+					
+			return True
+			
+	def isidentity(self) :
+		
+		if self == matrix.identity(self.__row) :
+			
+			return True
+			
+		return False
+	
+	def isuppertri(self) :
+		if self.issquare()==False :
+			print(f"{self}is not a SQUARE MATRIX first.")		
+		else :
+			for i in range(self.__row) :
+				for j in range(self.__col) :					
+					if i>j :
+						if self.__matrix[i][j]==0 :
+							return True
+						else :
+							return False
+							break
+					else :
+						pass
+			
+	
+	def islowertri(self) :
+		if self.issquare()==False :
+			print(f"{self}is not a SQUARE MATRIX first.")		
+		else :
+			for i in range(self.__row) :
+				for j in range(self.__col) :					
+					if i<j :
+						if self.__matrix[i][j]==0 :
+							return True
+						else :
+							return False
+							break
+					else :
+						pass
+			
+	
+	def istriangular(self) :
+		if self.issquare()==False :
+			print(f"{self} is not a SQUARE MATRIX first.")
+		if self.isuppertri()==True or self.islowertri()==True :
+			return True
+		return False
+	
+		
+
+		
+		
 	
