@@ -18,30 +18,18 @@ class matrix() :
 	ENTER ELEMENTS IN THE MATRIX
 	IF ONLY A ROW LIST OR A TUPLE IS GIVEN THE CONSTRUCTOR CREATE A COLUMN MATRIX OF THE GIVEN LENGHT
 	"""
-	def __init__(self ,element = [],rows = 0,columns = 0,null=False) :
-		if(null==True):
-			self.__row=0
-			self.__col=0
-			self.__order= f"{self.__row} * {self.__col}"
-			self.__matrix = self.__null_matrix()
-		if(rows!=0 or columns!=0):
-			self.__row = rows
-			self.__col = columns
-			self.__order = f"{rows} * {columns}"
-			self.__matrix = [[0] * rows] * columns
-		else:
-			self.__row = len(element)
-			self.__col = len(element[0])
-			self.__order = f"{self.__row} * {self.__col}"
-			self.__matrix = self.__put_into_matrix(element)
+	def __init__(self ,element = []) :
+		
+		self.__row = len(element)
+		self.__col = len(element[0])
+		self.__order = f"{self.__row} * {self.__col}"
+		self.__matrix = self.__put_into_matrix(element)
 	"""
 	IF ON THE WAY AT ANY INSTANT IF YOU WANTS TO CHANGE THE WHOLE 
 	MATRIX OR WANTS TO CHANGE THE INTIALY GENERATED MATRIX YOU CAN 
 	USE THIS FUNCTION matrix_input() 
 	"""
 	def matrix_input(self) :
-		
-		self.InputList = []
 		
 		print("USE SPACES TO SEPRATE DIFFERENT ELEMENTS")
 		
@@ -83,26 +71,6 @@ class matrix() :
 		return matr
 				
 			
-	
-	"""
-	THIS FUNCTION __null_matrix() WILL MAKE THE MATRIX AS NULL MATRIX 
-	IT WILL BE USED BY CONSTRUCTOR AT INITIAL INSTANT
-	"""
-	
-	def __null_matrix(self) :
-		
-		self.__matrix = []
-		
-		for i in range(self.__row) :
-			
-			self.__list = []
-			
-			for j in range(self.__col) :
-				
-				self.__list += [0]
-				
-			self.__matrix += [self.__list]
-		return self.__matrix
 	'''
 	Returns a list containing the matrix
 	'''
@@ -124,8 +92,11 @@ class matrix() :
 	'''
 	Returns the value of the individual elements.
 	'''
-	def get(self,RowNumber,ColNumber):
-		return self.__matrix[RowNumber-1][ColNumber-1]
+	def __getitem__(self , index = (0,0)) :
+		
+		return self.__matrix[index[0]][index[1]]
+		
+		
 	'''
 	Returns the total numbber of rows in the matrix.
 	'''
@@ -145,10 +116,16 @@ class matrix() :
 	'''
 	
 	'''
-	def Set(self,RowNumber,ColNumber,value):
-		if(isinstance(value,(int,float)==False)):
+	
+	def __setitem__(self , index = (0,0) , value =None) :
+		
+		if(isinstance(value,(int,float))==False):
 			raise IntFloatError(value)
-		self.__matrix[RowNumber-1][ColNumber-1] = value
+			
+		else :
+			self.__matrix[index[0]][index[1]] = value
+		
+		
 
 	"""
 	This method converts the matrix object into string.
@@ -270,7 +247,49 @@ class matrix() :
 		
 		return list3	
 			
-
 	
+	@classmethod
+	def nullMatrix(cls , order = (1,1)) :
+		
+		__row = order[0]
+		__col = order[1]
+		
+		__matrix = [[0] * __col] * __row
+		
+		return matrix(__matrix)
 	
+	@classmethod
+	def diagonalMatrix(cls , diagonalElements = (0 ,)) :
+		
+		__k = len(diagonalElements)
+		__matr = [[0] * __k] * __k
+		
+		for i in range(__k) :
+			
+			list1 = __matr[i].copy()
+			
+			list1[i] = diagonalElements[i]
+			
+			__matr[i] = list1
+			
+		return matrix(__matr)
+		
+		
+	@classmethod
+	def scalarMatrix(cls , element , order = 1) :
+			
+		return cls.diagonalMatrix((element ,)*order)
+		
+	@classmethod
+	def identity(cls , order = 1) :
+		
+		return cls.scalarMatrix(element = 1 , order = order)
+		
+	
+		
+		
+		
+		
+		
+		
 	
