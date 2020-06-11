@@ -1,0 +1,6 @@
+# THIS IS BUG_INFO.txt
+
+BUG_ID		BUG_NAME		BUG_DETAILS
+
+b001			alias_bug			changes the operands while performing 
+													arithmatic operations

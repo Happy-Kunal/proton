@@ -1,5 +1,5 @@
 from proton.matrices import matrix
-a = matrix.nullMatrix(order = (3,3))
+""" a = matrix.nullMatrix(order = (3,3))
 
 b = matrix([[1,2,3],[4,5,6] ,[7,8,9]])
 
@@ -29,3 +29,32 @@ print(f"scalar matrix \"f\" : {f}")
 print()
 print(f"identity matrix \"i\" : {i}")
 
+
+print(b)
+print(b*(-1))
+print(b)
+
+
+
+j = matrix([[1,2],[1,2]])
+k = matrix([[1,2,3],[1,2,3]])
+print(f"j*k : {j*k")
+print(f"j*2 : {j*2}")
+
+"""
+
+
+l = matrix([[1,2 ,5],[1,2 ,5]])
+m = matrix([[1,2,3] , [4,5,6]])
+
+
+print(f"l : {l}")
+print(f"m : {m}")
+print(f"l - m : {l-m}")
+print(f"l + m : {l+m}")
+print(f"l : {l}")
+print(f"m : {m}")
+print(f"l transpose : {l.transpose()}")
+print(f"now , l is : {l}")
+
+# print(f"l.split() : {l.split()}")
