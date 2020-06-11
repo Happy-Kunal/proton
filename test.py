@@ -13,19 +13,20 @@ i = matrix.identity(3)
 
 print(a)
 print(b)
-print(b[1,1]) #expected result should be 5
 
-b[1 , 1] = 400
 
-print(b)
+Print(a.isnull()) # Print True/a is a null matrix.
 
-print(f"diagonal matrix \"c\" : {c}")
-print(f"diagonal matrix \"d\" : {d}")
-print(f"diagonal matrix \"e\" : {e}")
+Print(b.diagonal()) # Print diagonal elements of b matrix.
 
-print()
-print(f"scalar matrix \"f\" : {f}")
+Print(b.trace()) # Print Trace of Matrix b.
 
-print()
-print(f"identity matrix \"i\" : {i}")
+Print(b.exponent(2)) # Print b matrix raised to power 2.
+
+Print(b.negative()) # print negative of Matrix b.
+
+Print(d.issquare()) # print False/d is not a square matrix.
+
+Print(d.isrow()) # Print True/d is a row matrix.
+
 
