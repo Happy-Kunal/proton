@@ -286,9 +286,233 @@ class matrix() :
 		return cls.scalarMatrix(element = 1 , order = order)
 		
 	
-		
-		
-		
+			def issingle(self) :
+	    result=str()
+	    if self.__row==1 and self.__col==1 :
+	        result=True
+	    else :
+	        result=False
+	        
+	    return result
+	    
+	def iscolumn(self) :
+	    result=str()
+	    if self.__row!=0 and self.__col==1 :
+	        result=True
+	    else :
+	        result=False
+	    
+	    return result
+	    
+	def isrow(self) :
+	    result=str()
+	    if self.__row==1 and self.__col !=0 :
+	        result=True
+	    else :
+	        result=False
+	    
+	    return result
+	        	        	    
+	def issquare(self) :
+	    result=str()
+	    if (self.__row==self.__col) :
+	        result=True
+	    else :
+	        result=False
+	        
+	    return result
+	
+	def isalgebraic(self,other) :
+	    if type(other)!=matrix :
+	        print(f"{other} is NOT a MATRIX first.")
+	    elif type(other)==matrix :
+	        if self.__row==other.__row and self.__col==other.__col :
+	            result=True
+	        else :
+	            result=False
+	        return result
+	    
+	def issymmetric(self) :
+	    result=str()
+	    if self.issquare()==False :
+	        print(f"{self}is not a SQUARE MATRIX first.")
+	    else :
+	        if self.transpose()==self :
+	            result=True
+	        else :
+	            result=False
+	    return result
+	
+	def diagonal(self) :
+	    diaglist=list()
+	    if self.issquare()==False :
+	        print(f"{self}is not a SQUARE MATRIX first.")
+	    else :
+	        for i in range(self.__row) :
+	            diaglist+=[self.__matrix[i][i]]
+	            
+	        return diaglist
+	        
+	def trace(self) :
+	    tracenum=0
+	    if self.issquare()==False :
+	        print(f"{self}is not a SQUARE MATRIX first.")
+	    else :
+	        tracenum=fsum(self.diagonal())
+	        
+	    return tracenum
+	    
+	def negative(self) :
+	    negat=matrix(self.transpose())	
+	    for i in range(negat.__row) :
+	        for j in range(negat.__col) :	            	            
+	            negat.__matrix[i][j]=-negat.__matrix[i][j]
+	    return negat.transpose()
+	    
+	def isnull(self) :
+	    result=str()
+	    matr=self.__matrix
+	    for i in range(self.__row):
+	        for j in range(self.__col):
+	            if (matr[i][j]==0) :
+	                result=True
+	            else :
+	                result=False
+	                break
+	    return result
+	    
+	def isskew(self) :
+	    result=str()
+	    if self.issquare()==False :
+	        print(f"{self}is not a SQUARE MATRIX first.")
+	    else :
+	        if self.transpose()==self.negative() :
+	            result=True
+	        else :
+	            result=False
+	    return result
+	    
+	def isdiagonal(self) :	    
+	    if self.issquare()==False :
+	        print(f"{self}is not a SQUARE MATRIX first.")
+	    else :
+	        matr=self.transpose()
+	        result=str()
+	        for i in range(self.__row) :
+	            for j in range(self.__col):
+	                if j==i :
+	                    continue
+	                else :
+	                    if matr[i][j]!=0 :
+	                        result=False
+	                        break
+	                    else :
+	                        result=True
+	    return result
+	    
+	def isscalar(self) :
+	    if self.issquare()==False :
+	        print(f"{self}is not a SQUARE MATRIX first.")
+	    elif self.isdiagonal()==False :
+	        print(f"{self}is not a SQUARE MATRIX first.")
+	    else :
+	        result=str()
+	        if self.trace()==self.__row*(int(self.__matrix[1][1])) :
+	            result=True
+	        else :
+	            result=False
+	            
+	        return result
+	        
+	def isidentity(self) :
+	    if self.issquare()==False :
+	        print(f"{self}is not a SQUARE MATRIX first.")
+	    elif self.isdiagonal()==False :
+	        print(f"{self}is not a DIAGONAL MATRIX first.")
+	    else :
+	        result=str()
+	        if self.trace()==self.__row :
+	            result=True
+	        else :
+	            result=False
+	        return result	      
+        
+        def exponent(self,expn) :
+	    if self.issquare()==False :
+	        print(f"{self}is not a SQUARE MATRIX first .")
+	    else :
+	        if type(expn)==int :
+	            result=matrix(self.__matrix.copy())
+	            if expn==1 :
+	                result=matrix(self.__matrix)
+	            elif expn==0 :
+	                result=self.__identity__()
+	            else  :
+	                for i in range(int(expn)-1) :
+	                    result=result.__mul__(self)
+	        else :
+	            result=f"{expn} is Invalid Token for EXPONENT of Matrix."
+	        return result
+	def isidem(self) :
+	    if self.issquare()==False :
+	        print(f"{self}is not a SQUARE MATRIX first.")
+	    else :
+	        if (self.exponent(2).__matrix==self.__matrix) :
+	            result=True
+	        else :
+	            result=False
+	        return result
+	
+	def isinvoluntary(self) :
+	    if self.issquare()==False :
+	        print(f"{self}is not a SQUARE MATRIX first.")
+	    else :
+	        if (self.exponent(2).__matrix==self.__identity__()) :
+	            result=True
+	        else :
+	            result=False
+	        return result
+	
+	def isuppertri(self) :
+	    if self.issquare()==False :
+	        print(f"{self}is not a SQUARE MATRIX first.")	    
+	    else :
+	        for i in range(self.__row) :
+	            for j in range(self.__col) :	                
+	                if i>j :
+	                    if self.__matrix[i][j]==0 :
+	                        result=True
+	                    else :
+	                        result=False
+	                        break
+	                else :
+	                    pass
+	        return result
+	
+	def islowertri(self) :
+	    if self.issquare()==False :
+	        print(f"{self}is not a SQUARE MATRIX first.")	    
+	    else :
+	        for i in range(self.__row) :
+	            for j in range(self.__col) :	                
+	                if i<j :
+	                    if self.__matrix[i][j]==0 :
+	                        result=True
+	                    else :
+	                        result=False
+	                        break
+	                else :
+	                    pass
+	        return result
+	
+	def istriangular(self) :
+	    if self.issquare()==False :
+	        print(f"{self} is not a SQUARE MATRIX first.")
+	    if self.isuppertri()==True or self.islowertri()==True :
+	        result=True
+	    else :
+	        result=False
+	
 		
 		
 		
