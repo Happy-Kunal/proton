@@ -6,7 +6,7 @@ from math import fsum
 # FOR MORE INFO VISIT BUG_INFO.txt
 
 
-class matrix(list()) :
+class matrix() :
 	
 	"""
 	CONSTRUCTOR OF CLASS TAKES AN ITERABLE(MOST PROBABLY A LIST OR TUPLE) AS INPUT WHICH CAN BE USED TO ENTER ELEMENTS IN THE MATRIX LIKE :
@@ -602,7 +602,7 @@ class matrix(list()) :
 			
 	def isnull(self) :
 		
-		if self = matrix.nullMatrix(self.__row) :
+		if self == matrix.nullMatrix(self.__row) :
 			
 			return True
 			
