@@ -404,7 +404,7 @@ class matrix() :
 				
 		else :
 			
-			return powermatrix(self , power)
+			return matrix.powermatrix(self , power)
 			
 			
 	
@@ -417,7 +417,13 @@ class matrix() :
 		else:
 			return False
 	
-	
+	'''
+	Sorts a matrix in rows position
+	'''
+	def rowSort(self):
+		pass
+
+
 	@staticmethod
 	def powermatrix(matr , power ) :
 				
@@ -427,10 +433,10 @@ class matrix() :
 					
 				else :
 					
-					mul = matr * powermatrix((power - 1) , matr)
-					
+					mul = matr
+					for i in range(1,power):
+						mul *= matr
 					return mul
-				 
 			
 	
 	"""
