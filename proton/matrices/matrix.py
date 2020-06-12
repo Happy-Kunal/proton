@@ -6,7 +6,7 @@ from math import fsum
 # FOR MORE INFO VISIT BUG_INFO.txt
 
 
-class matrix() :
+class matrix(list()) :
 	
 	"""
 	CONSTRUCTOR OF CLASS TAKES AN ITERABLE(MOST PROBABLY A LIST OR TUPLE) AS INPUT WHICH CAN BE USED TO ENTER ELEMENTS IN THE MATRIX LIKE :
@@ -197,7 +197,7 @@ class matrix() :
 	"""
 	diagonal related operations by vikas
 	"""
-		def getdiagonal(self) :
+	def getdiagonal(self) :
 		diaglist=list()
 		if self.issquare()==False :
 			raise TypeError(f"{self} is not a square matrix")
