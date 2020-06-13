@@ -393,7 +393,7 @@ class matrix() :
 	
 					list1 = [] # this is done to solve bug b001
 	
-					for col in other.transpose() :
+					for col in other.transpose().__matrix :
 		
 						list1 += [fsum(matrix.__directmul(row , col))] # this is done to solve bug b001
 		
