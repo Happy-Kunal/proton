@@ -1,4 +1,4 @@
-from proton.errors.IntFloatError import IntFloatError
+from proton.errors.errors import *
 
 from math import fsum
 
@@ -117,7 +117,7 @@ class matrix() :
 	
 	'''
 	def pullRow(self,RowNumber):
-		return self.__matrix[RowNumber-1]
+		return self.__matrix[RowNumber]
 	'''
 	pullCol() Returns the column at a the given index. AS :
 		
@@ -133,8 +133,36 @@ class matrix() :
 	def pullCol(self,ColNumber):
 		collist = list()
 		for i in self.__matrix:
-			collist += [i[ColNumber-1]]
+			collist += [i[ColNumber]]
 		return collist
+	
+	def pushRow(self,Row):
+		self.pushRowAt(Row,self.__row)
+	'''
+	ADDS ROWS AFTER THE GIVEN POSTION.
+	'''
+	def pushRowAt(self,Row,Pos):
+		if(type(Row) != list and type(Row) != matrix):
+			raise OnlyMatrixAllowed(Row)
+		if(type(Row)== list):
+			Row = matrix(Row)
+		if(Row.__col != self.__col):
+			raise OrderMismatch(Row + f" cannot be added to {self}")
+		matr = self.__matrix[0:Pos]
+		for i in range(0,Row.__row):
+			matr +=[Row.__matrix[i]]
+		self.__row += Row.__row 
+		matr += self.__matrix[Pos+Row.__row:self.__row ]
+		self.__matrix = matr
+
+
+	def pushColAt(self,Col,Pos):
+		if(type(Col) != list and type(Col) != matrix):
+			raise OnlyMatrixAllowed(Col)
+		if(type(Col)== list):
+			Col = matrix.columnMatrix(Col)
+		if(Row.__col != self.__col):
+			raise OrderMismatch(Row + f" cannot be added to {self}")
 	'''
 	To get the value of the individual element. As :
 		
@@ -165,7 +193,7 @@ class matrix() :
 		
 	'''
 	def getRowCount(self):
-		return self.__rows
+		return self.__row
 	'''
 	getColCount() Returns the total number of columns iin the matrix. As :
 		
@@ -182,6 +210,7 @@ class matrix() :
 		return self.__col
 	'''
 	getOrderCount() Returns the order of the matrix. As :
+		def colSort(self):
 		
 		>>> a = matrix([[1,2,3] , [4,5,6] , [7,8,9]])
 		>>> a.getOrderCount()
@@ -221,7 +250,7 @@ class matrix() :
 	
 	
 	'''
-	IF USER WANTS HE/SHE CAN CHANGE ANY PARTICULAR VALUE OF
+	IF USER WANTS THEY CAN CHANGE ANY PARTICULAR VALUE OF
 	ELEMENT OF MATRIX AS :
 	
 		>>> a = matrix([[1,2,3] , [4,5,6] , [7,8,9]])
@@ -288,7 +317,7 @@ class matrix() :
 	def __add__(self , other) :
 	
 		if(type(other) != matrix):
-			raise TypeError(f"Cannot add {self} with {other}. Different datatypes.")
+			raise OnlyMatrixAllowed(other)
 		if(self.__order != other.__order):
 			raise TypeError(f"Different order matrices : {self} and {other}")
 	
@@ -317,7 +346,7 @@ class matrix() :
 	def __sub__(self , other) :
 	
 		if(type(other) != matrix):
-			raise TypeError(f"Cannot add {self} with {other}. Different datatypes.")
+			raise OnlyMatrixAllowed(other)
 		if(self.__order != other.__order):
 			raise TypeError(f"Different order matrices : {self} and {other}")
 	
@@ -421,8 +450,8 @@ class matrix() :
 	Sorts a matrix in rows position
 	'''
 	def rowSort(self):
-		pass
-
+		for i in range(0,self.__row):
+			self.__matrix[i].sort()
 
 	@staticmethod
 	def powermatrix(matr , power ) :
@@ -492,7 +521,7 @@ class matrix() :
 	
 		for i in range(self.__col) :
 		
-			trans[i] = self.pullCol(i + 1)
+			trans[i] = self.pullCol(i)
 		
 		return trans
 			
@@ -552,6 +581,9 @@ class matrix() :
 		
 		return cls.scalarMatrix(element = 1 , order = order)
 		
+	@classmethod
+	def columnMatrix(cls,column):
+		return matrix.transpose(matrix(column))
 	
 	
 	"""
