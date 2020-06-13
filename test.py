@@ -43,6 +43,7 @@ print(f"j*2 : {j*2}")
 
 """
 
+"""
 
 l = matrix([[1,2 ,5],[1,2 ,5]])
 m = matrix([[1,2,3] , [4,5,6]])
@@ -66,3 +67,9 @@ print(l)
 l = matrix.columnMatrix([[1,2,3]])
 print(l)
 # print(f"l.split() : {l.split()}")
+
+"""
+
+m = matrix([[1,2,3],[4,5,6],[7,8,9]])
+
+print(f"m.split() : {m.split()}")

@@ -475,17 +475,16 @@ class matrix() :
 	split() provides a tuple containing symmMatrix and skewsymmMatrix
 	of a matrix in same order as written
 	
-	THESE ARE CURRENTLY UNDER CONSTRUCTION SO KINDLY DON'T USE THEM FOR NOW'
 	
 	"""
 	
 	def symmMatrix(self) :
 		
-		return (((self.__matrix) + (self.transpose())) * 0.5)
+		return ((self + self.transpose()) * 0.5)
 		
 	def skewSymmMatrix(self) :
 		
-		return (((self.__matrix) - (self.transpose())) * 0.5)
+		return ((self - self.transpose()) * 0.5)
 		
 	def split(self) :
 		
@@ -523,7 +522,7 @@ class matrix() :
 		
 			trans[i] = self.pullCol(i)
 		
-		return trans
+		return matrix(trans)
 			
 		
 	@staticmethod
