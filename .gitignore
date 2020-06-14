@@ -86,4 +86,4 @@ lint/tmp/
 
 #python bytecode
 
-/src/__pycache__
+__pycache__

@@ -43,6 +43,7 @@ print(f"j*2 : {j*2}")
 
 """
 
+"""
 
 l = matrix([[1,2 ,5],[1,2 ,5]])
 m = matrix([[1,2,3] , [4,5,6]])
@@ -65,6 +66,18 @@ l.pushRow([[1,2]])
 print(l)
 l = matrix.columnMatrix([[1,2,3]])
 print(l)
+<<<<<<< HEAD
 l.pushColAt([[3,2,1]],0)
 print(l)
 # print(f"l.split() : {l.split()}")
+=======
+# print(f"l.split() : {l.split()}")
+
+"""
+
+m = matrix([[1,2,3],[4,5,6],[7,8,9]])
+
+print(f"m.split() : {m.split()}")
+
+print(m*m)
+>>>>>>> 52bf42a94fd3cc1dd614cac3d0697b616ba3f21c
