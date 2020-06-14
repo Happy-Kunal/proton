@@ -151,7 +151,7 @@ class matrix() :
 		matr = self.__matrix[0:Pos]
 		for i in range(0,Row.__row):
 			matr +=[Row.__matrix[i]]
-		self.__row += Row.__row 
+		self.__row += Row.__row
 		matr += self.__matrix[Pos+Row.__row:self.__row ]
 		self.__matrix = matr
 
@@ -161,8 +161,13 @@ class matrix() :
 			raise OnlyMatrixAllowed(Col)
 		if(type(Col)== list):
 			Col = matrix.columnMatrix(Col)
-		if(Row.__col != self.__col):
-			raise OrderMismatch(Row + f" cannot be added to {self}")
+		if(Col.__col != self.__col):
+			raise OrderMismatch(Col + f" cannot be added to {self}")
+		k = 0
+		self.__row +=Col.__row
+		matr = [[0] * self.__col] * self.__row
+		print(matr)
+
 	'''
 	To get the value of the individual element. As :
 		
@@ -228,7 +233,7 @@ class matrix() :
 	"""
 	def getdiagonal(self) :
 		diaglist=list()
-		if self.issquare()==False :
+		if self.isSquare()==False :
 			raise TypeError(f"{self} is not a square matrix")
 		else :
 			for i in range(self.__row) :
@@ -239,7 +244,7 @@ class matrix() :
 	def getdiagonalsum(self) :
 		
 		sum = 0
-		if self.issquare()==False :
+		if self.isSquare()==False :
 			raise TypeError(f"{self} is not a square matrix")
 		else :
 			for i in range(self.__row) :
@@ -393,7 +398,7 @@ class matrix() :
 	
 					list1 = [] # this is done to solve bug b001
 	
-					for col in other.transpose() :
+					for col in other.transpose().__matrix :
 		
 						list1 += [fsum(matrix.__directmul(row , col))] # this is done to solve bug b001
 		
@@ -427,7 +432,7 @@ class matrix() :
 			
 			 raise TypeError(f"{power} is not an integer .\nonly whole numbers are allowed") 
 		
-		elif self.issquare() == False :
+		elif self.isSquare() == False :
 			
 			raise TypeError(f"{self} is not a square matrix . \nonly square matrices are allowed")
 				
@@ -523,7 +528,7 @@ class matrix() :
 		
 			trans[i] = self.pullCol(i)
 		
-		return trans
+		return matrix(trans)
 			
 		
 	@staticmethod
@@ -590,7 +595,7 @@ class matrix() :
 	SOME BOOLEAN METHODS
 	"""
 		
-	def issingle(self) :
+	def isSingle(self) :
 		
 		if self.__row==1 and self.__col==1 :
 			return True
@@ -598,28 +603,28 @@ class matrix() :
 		return False
 			
 
-	def iscolumn(self) :
+	def isColumn(self) :
 		
 		if self.__row!=0 and self.__col==1 :
 			return True
 		return False
 			
 				
-	def isrow(self) :
+	def isRow(self) :
 		
 		if self.__row==1 and self.__col !=0 :
 			return True
 			
 		return False
 		
-	def issquare(self) :
+	def isSquare(self) :
 		
 		if (self.__row==self.__col) :
 			return True
 		return False
 			
 		
-	def isadditive(self , other) :
+	def isAdditive(self , other) :
 		
 		if type(other)!=matrix :
 			return False
@@ -630,7 +635,7 @@ class matrix() :
 		
 		return False			
 	
-	def issymmetric(self) :
+	def isSymmetric(self) :
 		
 		if self.transpose()==self :
 			return True
@@ -638,7 +643,7 @@ class matrix() :
 		return False
 
 			
-	def isnull(self) :
+	def isNull(self) :
 		
 		if self == matrix.nullMatrix(self.__row) :
 			
@@ -647,9 +652,9 @@ class matrix() :
 		return False
 		
 	
-	def isskew(self) :
+	def isSkew(self) :
 		
-		if self.issquare()==False :
+		if self.isSquare()==False :
 			return False
 		
 		elif self.transpose()==(self * (-1)) :
@@ -657,9 +662,9 @@ class matrix() :
 			
 		return False
 		
-	def isdiagonal(self) :
+	def isDiagonal(self) :
 		
-		if self.issquare()==False :
+		if self.isSquare()==False :
 			return False
 		
 		else :
@@ -676,7 +681,7 @@ class matrix() :
 						
 			return True
 	
-	def isscalar(self) :
+	def isScalar(self) :
 		
 		if self.isdiagonal() :
 			
@@ -689,7 +694,7 @@ class matrix() :
 					
 			return True
 			
-	def isidentity(self) :
+	def isIdentity(self) :
 		
 		if self == matrix.identity(self.__row) :
 			
@@ -697,8 +702,8 @@ class matrix() :
 			
 		return False
 	
-	def isuppertri(self) :
-		if self.issquare()==False :
+	def isUpperTri(self) :
+		if self.isSquare()==False :
 			print(f"{self}is not a SQUARE MATRIX first.")		
 		else :
 			for i in range(self.__row) :
@@ -713,8 +718,8 @@ class matrix() :
 						pass
 			
 	
-	def islowertri(self) :
-		if self.issquare()==False :
+	def isLowerTri(self) :
+		if self.isSquare()==False :
 			print(f"{self}is not a SQUARE MATRIX first.")		
 		else :
 			for i in range(self.__row) :
@@ -729,8 +734,8 @@ class matrix() :
 						pass
 			
 	
-	def istriangular(self) :
-		if self.issquare()==False :
+	def isTriangular(self) :
+		if self.isSquare()==False :
 			print(f"{self} is not a SQUARE MATRIX first.")
 		if self.isuppertri()==True or self.islowertri()==True :
 			return True
