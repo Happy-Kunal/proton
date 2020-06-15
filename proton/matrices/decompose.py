@@ -4,54 +4,49 @@ from proton.errors.errors import *
 File for contaning all the decomppositors
 '''
 class decompose():
+    @staticmethod
+    def pivot_matrix(M):
+        """Returns the pivoting matrix for M, used in Doolittle's method."""
+        m = len(M)
 
+    # Create an identity matrix, with floating point values                                                                                                                                                                                            
+        id_mat = [[float(i ==j) for i in range(m)] for j in range(m)]
+
+    # Rearrange the identity matrix such that the largest element of                                                                                                                                                                                   
+    # each column of M is placed on the diagonal of of M                                                                                                                                                                                               
+        for j in range(m):
+            row = max(range(j, m), key=lambda i: abs(M[i][j]))
+            if j != row:
+            # Swap the rows                                                                                                                                                                                                                            
+                id_mat[j], id_mat[row] = id_mat[row], id_mat[j]
+
+        return matrix(id_mat)
     @staticmethod
-    def pivotise(matr):
-        if(type(matr) != matrix):
-            raise OnlyMatrixAllowed(matr)
-        if(matr.isSquare()==False):
-            raise ValueError("Only square matrix can be fivoised" + f" {matr}" + " is not a square matrix.")
-        ID = matrix.identity(len(matr.pull()[0])).pull()
-        n = matr.getRowCount()
-        for i in range(0,n):
-            maxm = matr[i,i]
-            row = i
-            for j in range(i,n):
-                if(matr[j,i] > maxm):
-                    maxm = matr[j,i]
-                    row = j
-            
-            if(i != row):
-                tmp = ID[i]
-                ID[i] = ID[row]
-                ID[row] = tmp
-        print(ID)
-        return matrix(ID)
-    '''
-    Breaks a matrix into a upper and a lower triangular matrix.
-    Returns a list of matrix as [UpperTrianglar , LowerTriangular, Pivotising]
-    '''
-    @staticmethod
-    def LU(matr):
-        if(type(matr) != matrix):
-            raise OnlyMatrixAllowed(matr)
-        if(matr.isSquare()==False):
-            raise ValueError("Only square matrix can be fivoised" + f" {matr}" + " is not a square matrix.")
-        pivot = decompose.pivotise(matr)
-        n = matr.getRowCount()
-        matr = (pivot * matr).pull()
-        up = [[0] * n] * n
-        down =[[0] * n] * n
-        for j in range(0,n):
-            down[j][j] = 1
-            for i in range(0,j+1):
-                s1 = 0
-                for k in range(0,i):
-                    s1+= up[k][j] * down[i][k]
-                up[i][j] = matr[i][j] - s1
-            for m in range(i,n):
-                s2 = 0
-                for l in range(0,j):
-                    s2+= up[l][j] * down[m][l]
-                down[m][j] = (matr[m][j] - s2) / up[j][j]
-        return (matrix(down),matrix(up),pivot)
+    def LU(A):
+        """Performs an LU Decomposition of A (which must be square)                                                                                                                                                                                        
+    into PA = LU. The function returns P, L and U."""
+        n = len(A.pull())
+
+    # Create zero matrices for L and U                                                                                                                                                                                                                 
+        L = [[0.0] * n for i in range(n)]
+        U = [[0.0] * n for i in range(n)]
+
+    # Create the pivot matrix P and the multipled matrix PA                                                                                                                                                                                            
+        P = decompose.pivot_matrix(A.pull())
+        PA =( P * A).pull()
+
+    # Perform the LU Decomposition                                                                                                                                                                                                                     
+        for j in range(n):
+        # All diagonal entries of L are set to unity                                                                                                                                                                                                   
+            L[j][j] = 1.0
+
+        # LaTeX: u_{ij} = a_{ij} - \sum_{k=1}^{i-1} u_{kj} l_{ik}                                                                                                                                                                                      
+            for i in range(j+1):
+                s1 = sum(U[k][j] * L[i][k] for k in range(i))
+                U[i][j] = PA[i][j] - s1
+
+        # LaTeX: l_{ij} = \frac{1}{u_{jj}} (a_{ij} - \sum_{k=1}^{j-1} u_{kj} l_{ik} )                                                                                                                                                                  
+            for i in range(j, n):
+                s2 = sum(U[k][j] * L[i][k] for k in range(j))
+                L[i][j] = (PA[i][j] - s2) / U[j][j]
+        return (matrix(L),matrix(U),P) 
