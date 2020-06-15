@@ -1,7 +1,5 @@
 from proton.errors.errors import *
-
 from math import fsum
-
 # WHERE EVER YOU FOUND BUG WITH ITS ID , NEVER CUT THOSE LINE
 # FOR MORE INFO VISIT BUG_INFO.txt
 
@@ -450,7 +448,6 @@ class matrix() :
 			return True
 		else:
 			return False
-	
 	'''
 	Sorts a matrix in rows position
 	'''

@@ -1,11 +1,11 @@
-from proton.matrices.matrix import matrix
 from proton.errors.errors import *
+from proton.matrices.matrix import matrix
 '''
 File for contaning all the decomppositors
 '''
 class decompose():
 	@staticmethod
-	def pivot_matrix(M):
+	def pivot(M):
 		"""Returns the pivoting matrix for M, used in Doolittle's method."""
 		m = len(M)
 
@@ -32,21 +32,24 @@ class decompose():
 		U = [[0.0] * n for i in range(n)]
 
 	# Create the pivot matrix P and the multipled matrix PA                                                                                                                                                                                            
-		P = decompose.pivot_matrix(A.pull())
-		PA =( P * A).pull()
+		P = decompose.pivot(A.pull())
+		PA =(P*A).pull()
 
-	# Perform the LU Decomposition                                                                                                                                                                                                                     
-		for j in range(n):
-		# All diagonal entries of L are set to unity                                                                                                                                                                                                   
-			L[j][j] = 1.0
+	# Perform the LU Decomposition
+		try:                                                                                                                                                                                                                  
+			for j in range(n):
+			# All diagonal entries of L are set to unity                                                                                                                                                                                                   
+				L[j][j] = 1.0
 
-		# LaTeX: u_{ij} = a_{ij} - \sum_{k=1}^{i-1} u_{kj} l_{ik}                                                                                                                                                                                      
-			for i in range(j+1):
-				s1 = sum(U[k][j] * L[i][k] for k in range(i))
-				U[i][j] = PA[i][j] - s1
+			# LaTeX: u_{ij} = a_{ij} - \sum_{k=1}^{i-1} u_{kj} l_{ik}                                                                                                                                                                                      
+				for i in range(j+1):
+					s1 = sum(U[k][j] * L[i][k] for k in range(i))
+					U[i][j] = PA[i][j] - s1
 
-		# LaTeX: l_{ij} = \frac{1}{u_{jj}} (a_{ij} - \sum_{k=1}^{j-1} u_{kj} l_{ik} )                                                                                                                                                                  
-			for i in range(j, n):
-				s2 = sum(U[k][j] * L[i][k] for k in range(j))
-				L[i][j] = (PA[i][j] - s2) / U[j][j]
-		return (matrix(L),matrix(U),P) 
+			# LaTeX: l_{ij} = \frac{1}{u_{jj}} (a_{ij} - \sum_{k=1}^{j-1} u_{kj} l_{ik} )                                                                                                                                                                  
+				for i in range(j, n):
+					s2 = sum(U[k][j] * L[i][k] for k in range(j))
+					L[i][j] = (PA[i][j] - s2) / U[j][j]
+			return (matrix(L),matrix(U),P) 
+		except ZeroDivisionError:
+			raise ZeroDeterminantError(f"Cannot find LU deompostion of {A}")
