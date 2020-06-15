@@ -6,7 +6,7 @@ def det(A) :
 		
 		U = decompose.LU(A)[1]
 		diagonal = U.getdiagonal()
-		detr = 1
+		detr = -1
 		for i in diagonal :
 		
 			detr *= i
