@@ -5,7 +5,7 @@ File for contaning all the decomppositors
 '''
 class decompose():
     @staticmethod
-    def pivot_matrix(M):
+    def pivot(M):
         """Returns the pivoting matrix for M, used in Doolittle's method."""
         m = len(M)
 
@@ -32,7 +32,7 @@ class decompose():
         U = [[0.0] * n for i in range(n)]
 
     # Create the pivot matrix P and the multipled matrix PA                                                                                                                                                                                            
-        P = decompose.pivot_matrix(A.pull())
+        P = decompose.pivot(A.pull())
         PA =( P * A).pull()
 
     # Perform the LU Decomposition                                                                                                                                                                                                                     
