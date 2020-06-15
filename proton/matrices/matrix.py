@@ -215,7 +215,6 @@ class matrix() :
 		return self.__col
 	'''
 	getOrderCount() Returns the order of the matrix. As :
-		def colSort(self):
 		
 		>>> a = matrix([[1,2,3] , [4,5,6] , [7,8,9]])
 		>>> a.getOrderCount()

@@ -57,6 +57,7 @@ print(f"l : {l}")
 print(f"m : {m}")
 print(f"l transpose : {l.transpose()}")
 print(f"now , l is : {l}")
+<<<<<<< HEAD
 l = matrix([[1,2],[1,2]])
 print(f"{l**2}")
 l = matrix([[2,1]])
@@ -80,4 +81,5 @@ m = matrix([[1,2,3],[4,5,6],[7,8,9]])
 print(f"m.split() : {m.split()}")
 
 print(m*m)
->>>>>>> 52bf42a94fd3cc1dd614cac3d0697b616ba3f21c
+
+# print(f"l.split() : {l.split()}")
