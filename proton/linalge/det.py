@@ -10,7 +10,6 @@ def det(A) :
 		for i in diagonal :
 		
 			detr *= i
-		
 		return detr
 	
 	except ZeroDivisionError :

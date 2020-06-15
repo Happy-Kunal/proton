@@ -1,5 +1,6 @@
 from proton.errors.errors import *
 from math import fsum
+import copy
 # WHERE EVER YOU FOUND BUG WITH ITS ID , NEVER CUT THOSE LINE
 # FOR MORE INFO VISIT BUG_INFO.txt
 
@@ -82,7 +83,7 @@ class matrix() :
 				for value in i:
 					if(isinstance(value,(int,float))== False):
 						raise IntFloatError(value)
-				matr+=[i]
+				matr+=[copy.deepcopy(i)]
 		return matr
 				
 			
@@ -736,9 +737,3 @@ class matrix() :
 		if self.isuppertri()==True or self.islowertri()==True :
 			return True
 		return False
-	
-		
-
-		
-		
-	
