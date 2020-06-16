@@ -147,12 +147,8 @@ class matrix() :
 			Row = matrix(Row)
 		if(Row.__col != self.__col):
 			raise OrderMismatch(Row + f" cannot be added to {self}")
-		matr = self.__matrix[0:Pos]
-		for i in range(0,Row.__row):
-			matr +=[Row.__matrix[i]]
-		self.__row += Row.__row
-		matr += self.__matrix[Pos+Row.__row:self.__row ]
-		self.__matrix = matr
+		if(Pos < 0 or Pos >= self.__row):
+			raise IndexError()
 
 
 	def pushColAt(self,Col,Pos):
