@@ -1,6 +1,38 @@
-from proton.matrices.matrix import *
 from proton.errors.errors import *
 import copy
+
+class _element():
+	def __init__(self,arg = []):
+		self.arg = arg
+	
+	def __add__(self, value):
+		if(type(value) == list):
+			value = _element(value)
+		if(len(self) != len(value)):
+			raise ArithmeticError("Cannot add " + self + " with " + value + "order mismatch.")
+		k = copy.deepcopy(self.arg)
+		for i in range(len(self)):
+			k[i]+= value.arg[i]
+		return _element(k)
+
+
+	def __mul__(self,value = 1):
+		pass
+
+	def __div__(self,value = 1):
+		pass
+
+	def __pow__(self,value = 1):
+		pass
+	
+	def __str__(self):
+		return str(self.arg)
+	
+	def __len__(self):
+		return len(self.arg)
+
+
+from proton.matrices.matrix import *
 class elementary():
 	'''
 	elemntary class hanndles elementry operarions on a matrix obj.
@@ -36,7 +68,7 @@ class elementary():
 	def __pullrow(self,index):
 		if(index>=self.__numrow or index <0):
 			raise IndexError(f"Cannot find {index} in {self}.")
-		return copy.deepcopy(self.__matlist[index])
+		return _element(copy.deepcopy(self.__matlist[index]))
 	
 	def __pullcol(self,index):
 		if(index>=self.__numcol or index <0):
@@ -44,20 +76,25 @@ class elementary():
 		m = [0 for k in range(self.__numcol)]
 		for i in range(self.__numrow):
 			m[i] = self.__matlist[i][index]
-		return m
+		return _element(m)
 	
-	def __pushcol(self,index,value=[]):
+	def __pushcol(self,index,value=_element()):
 		if(index>=self.__numcol or index <0):
 			raise IndexError(f"Cannot find column {index} in {self}.")
 		if(len(value)!= self.__numrow):
 			raise IndexError(f"The index of {value} does not match that of {self}")
 
 		for i in range(self.__numrow):
-			self.__matlist[i][index] = value[i]
+			self.__matlist[i][index] = value.arg[i]
 	
-	def __pushrow(self,index,value=[]):
+	def __pushrow(self,index,value):
 		if(index>=self.__numrow or index <0):
 			raise IndexError(f"Cannot find row of {index} in {self}.")
+		if(type(value) ==list):
+			value = _element(value)
 		if(len(value)!= self.__numcol):
 			raise IndexError(f"The index of {value} does not match that of {self}")
-		self.__matlist[index] = copy.deepcopy(value)
+		self.__matlist[index] = copy.deepcopy(value.arg)
+
+	def __str__(self):
+		return str(self.__matlist)
