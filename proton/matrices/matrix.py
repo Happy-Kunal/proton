@@ -165,8 +165,6 @@ class matrix() :
 		k = 0
 		self.__row +=Col.__row
 		matr = [[0] * self.__col] * self.__row
-		print(matr)
-
 	'''
 	To get the value of the individual element. As :
 		
@@ -737,3 +735,18 @@ class matrix() :
 		if self.isuppertri()==True or self.islowertri()==True :
 			return True
 		return False
+	
+	def det(self):
+		if(self.isSquare==False):
+			raise ArithmeticError(f"Cannot find determinant of {self} . This is not a square matrix.")
+		try:
+			from .decompose import decompose
+			m = (decompose.LU(self)[1]).pull()
+			Det = -1.0
+			for i in range(self.__row):
+				Det *= m[i][i]
+			del decompose
+			return Det
+		except ZeroDeterminantError:
+			del decompose
+			return 0.0

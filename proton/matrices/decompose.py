@@ -1,5 +1,4 @@
 from proton.errors.errors import *
-from proton.matrices.matrix import matrix
 '''
 File for contaning all the decomppositors
 '''
@@ -19,14 +18,14 @@ class decompose():
 			if j != row:
 			# Swap the rows                                                                                                                                                                                                                            
 				id_mat[j], id_mat[row] = id_mat[row], id_mat[j]
-
+		from proton.matrices.matrix import matrix
 		return matrix(id_mat)
 	@staticmethod
 	def LU(A):
 		"""Performs an LU Decomposition of A (which must be square)                                                                                                                                                                                        
 	into PA = LU. The function returns P, L and U."""
+		from proton.matrices.matrix import matrix
 		n = len(A.pull())
-
 	# Create zero matrices for L and U                                                                                                                                                                                                                 
 		L = [[0.0] * n for i in range(n)]
 		U = [[0.0] * n for i in range(n)]

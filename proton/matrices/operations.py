@@ -21,4 +21,4 @@ class elementary():
 		if(index[0]=='R'):
 			pass
 		else:
-			raise OrderMismatch("Can only return column or a row.")			
+			raise OrderMismatch("Can only return column or a row.")
