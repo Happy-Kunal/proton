@@ -39,11 +39,61 @@ class _element():
 			for i in range(len(self)):
 				k[i] *= value
 			return _element(k)
-	def __div__(self,value = 1):
-		pass
+	def __truediv__(self,value):
+		if(type(value) == int or type(value) == float):
+			k = copy.deepcopy(self.arg)
+			for i in range(len(self.arg)):
+				k[i] /= value
+			return _element(k)
+		
+		if(type(value) == _element):
+			k = copy.deepcopy(self.arg)
+			for i in range(len(self.arg)):
+				k[i] = k[i] / value.arg[i]
+			return _element(k)
+	
+	def __rtruediv__(self,value):
+		if(type(value) == int or type(value) == float):
+			k = copy.deepcopy(self.arg)
+			for i in range(len(self.arg)):
+				k[i] = value/ k[i]
+			return _element(k)
 
-	def __pow__(self,value = 1):
-		pass
+
+	def __floordiv__(self,value):
+		if(type(value) == int or type(value) == float):
+			k = copy.deepcopy(self.arg)
+			for i in range(len(self.arg)):
+				k[i] = k[i]// value
+			return _element(k)
+		
+		if(type(value) == _element):
+			k = copy.deepcopy(self.arg)
+			for i in range(self.arg):
+				k[i] = k[i] // value.arg[i]
+			return _element(k)
+
+
+
+	def __rfloordiv__(self,value):
+		if(type(value) == int or type(value) == float):
+			k = copy.deepcopy(self.arg)
+			for i in range(len(self.arg)):
+				k[i] = value// k[i]
+			return _element(k)
+
+		if(type(value) == _element):
+			k = copy.deepcopy(self.arg)
+			for i in range(len(self.arg)):
+				k[i] = value.arg[i] // k[i]
+			return _element(k)
+
+	def __pow__(self,value):
+		if(type(value) == int or type(value) == float):
+			k = copy.deepcopy(self.arg)
+			for i in range(len(self.arg)):
+				k[i] = k[i] ** value
+			return _element(k)
 	
 	def __str__(self):
 		return str(self.arg)
