@@ -16,9 +16,29 @@ class _element():
 		return _element(k)
 
 
-	def __mul__(self,value = 1):
-		pass
+	def __mul__(self,value):
+		if(type(value) == float or type(value) == int):
+			k = copy.deepcopy(self.arg)
+			for i in range(len(self)):
+				k[i] *= value
+			return _element(k)
 
+		if(type(value) == _element):
+			if(len(value) != len(self)):
+				raise OrderMismatch("Cannot multiply " + self + " with " + value  + " order mismatch. ")
+			k = copy.deepcopy(self.arg)
+			for i in range(len(self)):
+				k[i] *= value.arg[i]
+			return _element(k)
+
+
+
+	def __rmul__(self,value):
+		if(type(value) == float or type(value) == int):
+			k = copy.deepcopy(self.arg)
+			for i in range(len(self)):
+				k[i] *= value
+			return _element(k)
 	def __div__(self,value = 1):
 		pass
 
