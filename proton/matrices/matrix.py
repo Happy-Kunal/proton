@@ -138,7 +138,7 @@ class matrix() :
 	def pushRow(self,Row):
 		self.pushRowAt(Row,self.__row)
 	'''
-	ADDS ROWS AFTER THE GIVEN POSTION.
+	Changes the row of the given position.
 	'''
 	def pushRowAt(self,Row,Pos):
 		if(type(Row) != list and type(Row) != matrix):
@@ -148,19 +148,25 @@ class matrix() :
 		if(Row.__col != self.__col):
 			raise OrderMismatch(Row + f" cannot be added to {self}")
 		if(Pos < 0 or Pos >= self.__row):
-			raise IndexError()
+			raise IndexError("Cannot find the given row in " +  {self})
+		self.__matrix[Pos] = copy.deepcopy(Row)
 
 
 	def pushColAt(self,Col,Pos):
 		if(type(Col) != list and type(Col) != matrix):
 			raise OnlyMatrixAllowed(Col)
-		if(type(Col)== list):
-			Col = matrix.columnMatrix(Col)
-		if(Col.__col != self.__col):
-			raise OrderMismatch(Col + f" cannot be added to {self}")
-		k = 0
-		self.__row +=Col.__row
-		matr = [[0] * self.__col] * self.__row
+		if(Pos < 0 or Pos >= self.__col):
+			raise IndexError("Cannot find the given column in " +  {self})
+		if(type(Col) == list):
+			if(len(Col) != self.__col):
+				raise OrderMismatch(Col + f" cannot be added to {self}")
+			for i in range(self.__row):
+				self.__matrix[i][Pos] = Col[i]
+		if(type(Col) == matrix):
+			if(Col.__col != self.__col):
+				raise OrderMismatch(Col + f" cannot be added to {self}")
+			for i in range(self.__row):
+				self.__matrix[i][Pos] = Col.__matrix[i][0]
 	'''
 	To get the value of the individual element. As :
 		
