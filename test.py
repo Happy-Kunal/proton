@@ -43,8 +43,6 @@ print(f"j*2 : {j*2}")
 
 """
 
-"""
-
 l = matrix([[1,2 ,5],[1,2 ,5]])
 m = matrix([[1,2,3] , [4,5,6]])
 
@@ -57,7 +55,6 @@ print(f"l : {l}")
 print(f"m : {m}")
 print(f"l transpose : {l.transpose()}")
 print(f"now , l is : {l}")
-<<<<<<< HEAD
 l = matrix([[1,2],[1,2]])
 print(f"{l**2}")
 l = matrix([[2,1]])
@@ -67,11 +64,10 @@ l.pushRow([[1,2]])
 print(l)
 l = matrix.columnMatrix([[1,2,3]])
 print(l)
-<<<<<<< HEAD
 l.pushColAt([[3,2,1]],0)
 print(l)
 # print(f"l.split() : {l.split()}")
-=======
+
 # print(f"l.split() : {l.split()}")
 
 """
@@ -83,3 +79,4 @@ print(f"m.split() : {m.split()}")
 print(m*m)
 
 # print(f"l.split() : {l.split()}")
+"""

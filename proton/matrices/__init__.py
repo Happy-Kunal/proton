@@ -1,2 +1,3 @@
-import proton.matrices.matrix
-matrix = matrix.matrix
+from .decompose import *
+from .operations import *
+from .matrix import *

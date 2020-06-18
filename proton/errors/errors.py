@@ -15,3 +15,9 @@ class OrderMismatch(Exception):
         self.value = value
     def __str__(self):
         return (self.value + " order mismatch.\n Cannot compute this operation.")
+
+class ZeroDeterminantError(Exception):
+    def __init__(self,value):
+        self.value = value
+    def __str__(self):
+        return (self.value + " the determinant of the matrix is zero.")

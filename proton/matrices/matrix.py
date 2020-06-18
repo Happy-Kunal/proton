@@ -1,7 +1,6 @@
 from proton.errors.errors import *
-
 from math import fsum
-
+import copy
 # WHERE EVER YOU FOUND BUG WITH ITS ID , NEVER CUT THOSE LINE
 # FOR MORE INFO VISIT BUG_INFO.txt
 
@@ -84,7 +83,7 @@ class matrix() :
 				for value in i:
 					if(isinstance(value,(int,float))== False):
 						raise IntFloatError(value)
-				matr+=[i]
+				matr+=[copy.deepcopy(i)]
 		return matr
 				
 			
@@ -139,7 +138,7 @@ class matrix() :
 	def pushRow(self,Row):
 		self.pushRowAt(Row,self.__row)
 	'''
-	ADDS ROWS AFTER THE GIVEN POSTION.
+	Changes the row of the given position.
 	'''
 	def pushRowAt(self,Row,Pos):
 		if(type(Row) != list and type(Row) != matrix):
@@ -148,26 +147,26 @@ class matrix() :
 			Row = matrix(Row)
 		if(Row.__col != self.__col):
 			raise OrderMismatch(Row + f" cannot be added to {self}")
-		matr = self.__matrix[0:Pos]
-		for i in range(0,Row.__row):
-			matr +=[Row.__matrix[i]]
-		self.__row += Row.__row
-		matr += self.__matrix[Pos+Row.__row:self.__row ]
-		self.__matrix = matr
+		if(Pos < 0 or Pos >= self.__row):
+			raise IndexError("Cannot find the given row in " +  {self})
+		self.__matrix[Pos] = copy.deepcopy(Row)
 
 
 	def pushColAt(self,Col,Pos):
 		if(type(Col) != list and type(Col) != matrix):
 			raise OnlyMatrixAllowed(Col)
-		if(type(Col)== list):
-			Col = matrix.columnMatrix(Col)
-		if(Col.__col != self.__col):
-			raise OrderMismatch(Col + f" cannot be added to {self}")
-		k = 0
-		self.__row +=Col.__row
-		matr = [[0] * self.__col] * self.__row
-		print(matr)
-
+		if(Pos < 0 or Pos >= self.__col):
+			raise IndexError("Cannot find the given column in " +  {self})
+		if(type(Col) == list):
+			if(len(Col) != self.__col):
+				raise OrderMismatch(Col + f" cannot be added to {self}")
+			for i in range(self.__row):
+				self.__matrix[i][Pos] = Col[i]
+		if(type(Col) == matrix):
+			if(Col.__col != self.__col):
+				raise OrderMismatch(Col + f" cannot be added to {self}")
+			for i in range(self.__row):
+				self.__matrix[i][Pos] = Col.__matrix[i][0]
 	'''
 	To get the value of the individual element. As :
 		
@@ -449,7 +448,6 @@ class matrix() :
 			return True
 		else:
 			return False
-	
 	'''
 	Sorts a matrix in rows position
 	'''
@@ -739,8 +737,17 @@ class matrix() :
 			return True
 		return False
 	
-		
-
-		
-		
-	
+	def det(self):
+		if(self.isSquare==False):
+			raise ArithmeticError(f"Cannot find determinant of {self} . This is not a square matrix.")
+		try:
+			from .decompose import decompose
+			m = (decompose.LU(self)[1]).pull()
+			Det = -1.0
+			for i in range(self.__row):
+				Det *= m[i][i]
+			del decompose
+			return Det
+		except ZeroDeterminantError:
+			del decompose
+			return 0.0
