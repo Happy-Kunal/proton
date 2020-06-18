@@ -744,7 +744,7 @@ class matrix() :
 		try:
 			from .decompose import decompose
 			m = (decompose.LU(self)[1]).pull()
-			Det = 1.0
+			Det = -1.0
 			for i in range(self.__row):
 				Det *= m[i][i]
 			del decompose
