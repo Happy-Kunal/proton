@@ -14,6 +14,18 @@ class _element():
 		for i in range(len(self)):
 			k[i]+= value.arg[i]
 		return _element(k)
+	
+	def __sub__(self,value):
+		if(type(value) == list):
+			value = _element(value)
+		
+		if(len(self) != len(value)):
+			raise ArithmeticError("Cannot subtract " + self + " with " + value + " order mismatch.")
+		k = copy.deepcopy(self.arg)
+		for i in range(len(self.arg)):
+			k[i] -= value.arg[i]
+		return _element(k)
+
 
 
 	def __mul__(self,value):
